@@ -1,0 +1,13 @@
+
+.root {
+    -fx-background-color: #ffcc66;
+}
+.label {
+    -fx-font-family: 'Arial Rounded MT Bold';
+    -fx-font-size: 20;
+    -fx-text-fill: #332200;
+    -fx-text-alignment: center;
+}
+
+
+
