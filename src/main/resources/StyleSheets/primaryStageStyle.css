@@ -13,8 +13,17 @@
     -fx-font-weight: bold;
     -fx-background-size: 70px;
 }
+.titleText {
+    -fx-font-weight: bold;
+    -fx-font-size: 100px;
+    -fx-alignment: center;
+}
 .text {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
     -fx-alignment: center;
+}
+.menu {
+    -fx-background-color: #996633;
+    -fx-border-color: #663300;
 }

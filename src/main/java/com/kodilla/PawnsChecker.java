@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public class PawnsChecker {
 
-    public static boolean check(ArrayList<Node> listButton, GridPane gridPane, Node rectangle) {
+    public static boolean check(ArrayList<Pawn> pawnsList, Node field) {
         boolean result = false;
-        for (Node btn: listButton){
-            result= GridPane.getRowIndex(rectangle).equals(GridPane.getRowIndex(btn)) && GridPane.getColumnIndex(rectangle).equals(GridPane.getColumnIndex(btn));
-            break;
+        for (Node btn: pawnsList){
+            result= GridPane.getRowIndex(field).equals(GridPane.getRowIndex(btn)) && GridPane.getColumnIndex(field).equals(GridPane.getColumnIndex(btn));
+
         }
-        return !result;
+        return result;
     }
 }

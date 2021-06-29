@@ -12,13 +12,20 @@ import javafx.stage.Stage;
 
 public class SecondaryStage {
 
-    private final Image scheme = new Image("file:src/main/resources/Images/scheme.png");
+
 
     public void secondaryStage() {
 
         VBox pane = new VBox();
         Scene scene = new Scene(pane, 640, 480);
-        scene.getStylesheets().add("file:src/main/java/com/kodilla/StylesheetSecond.css");
+
+
+        try  {
+            scene.getStylesheets().add(getClass().getResource("/StyleSheets/secondaryStageStyle.css").toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         String text = new String("Game rules:\n " +
                 "-There are two players in the game. " +
@@ -32,11 +39,18 @@ public class SecondaryStage {
 
         label.setWrapText(true);
 
+       try  {
 
-        ImageView image = new ImageView(scheme);
-        image.setFitWidth(400);
-        image.setFitHeight(200);
-        pane.getChildren().addAll(image, label);
+           Image scheme = new Image(String.valueOf(getClass().getResource("/Images/scheme.png")));
+           ImageView image = new ImageView(scheme);
+           image.setFitWidth(400);
+           image.setFitHeight(200);
+           pane.getChildren().add(image);
+       }catch (Exception e){
+
+       }
+
+        pane.getChildren().addAll(label);
         pane.setAlignment(Pos.CENTER);
         pane.setPadding(new Insets(5));
 

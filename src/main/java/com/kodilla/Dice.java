@@ -24,8 +24,16 @@ public class Dice {
 
         dice = new Button();
         dice.getStyleClass().add("dice");
-        dice.getStylesheets().add("file:src/main/java/com/kodilla/StylesheetFirst.css");
-        grid.setHalignment(dice, HPos.CENTER);
+
+        try {
+            dice.getStylesheets().add(Dice.class.getResource("/StyleSheets/primaryStageStyle.css").toString());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+        GridPane.setHalignment(dice, HPos.CENTER);
         dice.setText(String.valueOf(getNumber()));
 
         return dice;
