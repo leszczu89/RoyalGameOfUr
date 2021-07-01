@@ -12,43 +12,30 @@ import javafx.stage.Stage;
 
 public class SecondaryStage {
 
-
-
     public void secondaryStage() {
 
         VBox pane = new VBox();
         Scene scene = new Scene(pane, 640, 480);
 
+        scene.getStylesheets().add(FileUtil.getFilePath("/StyleSheets/secondaryStageStyle.css"));
 
-        try  {
-            scene.getStylesheets().add(getClass().getResource("/StyleSheets/secondaryStageStyle.css").toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        String text = new String("Game rules:\n " +
+        String text = "Game rules:\n " +
                 "-There are two players in the game. " +
                 "\n-The main goal is to pass 7 pawns through the board. \n" +
                 "-The player who will succeed as the first one - wins.\n" +
                 "-You can capture the opponent's pawns in the middle fields\n(they are shared by both players)\n" +
                 "-If a pawn is captured - it returns to the beginning of the board\n " +
                 "-You move as many fields as you rolled the dice. \n" +
-                "-If you get 0 - you lost your turn.");
+                "-If you get 0 - you lost your turn.";
         Label label = new Label(text);
 
         label.setWrapText(true);
 
-       try  {
-
-           Image scheme = new Image(String.valueOf(getClass().getResource("/Images/scheme.png")));
-           ImageView image = new ImageView(scheme);
-           image.setFitWidth(400);
-           image.setFitHeight(200);
-           pane.getChildren().add(image);
-       }catch (Exception e){
-
-       }
+        Image scheme = new Image(FileUtil.getFilePath("/Images/scheme.png"));
+        ImageView image = new ImageView(scheme);
+        image.setFitWidth(400);
+        image.setFitHeight(200);
+        pane.getChildren().add(image);
 
         pane.getChildren().addAll(label);
         pane.setAlignment(Pos.CENTER);
