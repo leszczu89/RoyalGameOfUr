@@ -8,18 +8,18 @@ import java.util.Map;
 
 public class OpponentsPawnReturner {
 
-//    public static Pawn getOpponentsPawnToReturn(int i, List<Pawn> opponentsPawnsList, List<Rectangle> fieldsList, int fieldIndex) {
-//
-//        Pawn opponentsPawn = null;
-//
-//        for (Pawn pawn: opponentsPawnsList) {
-//            if (GridPane.getRowIndex(pawn).equals(GridPane.getRowIndex(fieldsList.get(fieldIndex + i))) &&
-//                    GridPane.getColumnIndex(pawn).equals(GridPane.getColumnIndex(fieldsList.get(fieldIndex + i)))){
-//                opponentsPawn = pawn;
-//            }
-//        }
-//        return opponentsPawn;
-//    }
+    public static Pawn getOpponentsPawnToReturn(int i, List<Pawn> opponentsPawnsList, List<Rectangle> fieldsList, int fieldIndex) {
+
+        Pawn opponentsPawn = null;
+
+        for (Pawn pawn: opponentsPawnsList) {
+            if (GridPane.getRowIndex(pawn).equals(GridPane.getRowIndex(fieldsList.get(fieldIndex + i))) &&
+                    GridPane.getColumnIndex(pawn).equals(GridPane.getColumnIndex(fieldsList.get(fieldIndex + i)))){
+                opponentsPawn = pawn;
+            }
+        }
+        return opponentsPawn;
+    }
 
     public static Button getBlackPawnToReturn(int keyValue, Map<Integer, Button> blackPawnOnBoardMap){
         Button blackPawn = null;
