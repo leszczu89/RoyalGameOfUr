@@ -120,7 +120,7 @@ public class TheRoyalGameOfUr extends Application {
 
         dice.setId("");
         dice.setOnAction(event -> {
-           error.setText("");
+            error.setText("");
             dice.setText(String.valueOf(random.nextInt(5)));
             if(activePlayer.equals(PLAYER_1_TEXT)) {
                 if (dice.getText().equals("0")) {
@@ -157,7 +157,6 @@ public class TheRoyalGameOfUr extends Application {
         System.out.println(secondUser.size());
 
 
-
         //Adding first pawns
         Pawn pawnCreator = new Pawn();
         Pawn firstPlayersPawn = pawnCreator.createPawn(BLACK_TEXT);
@@ -176,8 +175,6 @@ public class TheRoyalGameOfUr extends Application {
         grid.add(firstPlayersPawn, 5, 1);
         grid.add(secondPlayersPawn, 5, 3);
 
-        Map<Integer, Button> blackPawnOnBoardMap = new HashMap<>();
-        Map<Integer, Button> whitePawnOnBoardMap = new HashMap<>();
 
         //Action handler for first pawn - first player
         firstPlayersPawn.setOnAction(event -> {
@@ -185,7 +182,8 @@ public class TheRoyalGameOfUr extends Application {
 
             if (diceRolled&&activePlayer.equals(PLAYER_1_TEXT)) {
 
-                Pawn pawn = pawnCreator.createPawn(BLACK_TEXT);
+                Pawn blackPawnCreator = new Pawn();
+                Pawn pawn = blackPawnCreator.createPawn(BLACK_TEXT);
                 pawn.setOnAction(event1 -> {
                     if (diceRolled && activePlayer.equals(PLAYER_1_TEXT)) {
                         handle(PLAYER_2_TEXT, pawn, firstUser, dice, grid, counter, firstPlayersPawns, secondPlayersPawns, firstPlayersPawn, secondPlayersPawn);
@@ -197,8 +195,16 @@ public class TheRoyalGameOfUr extends Application {
                 });
 
                 int i = Integer.parseInt(dice.getText());
-
-                if (!PawnsChecker.checkIfPawnIsOnField(firstPlayersPawns, firstUser.get(i - 1)) || firstPlayersPawns.isEmpty()) {
+                System.out.println("First Player: occupied? " +PawnsChecker.checkIfPawnIsOnField(firstPlayersPawns, firstUser.get(i - 1)));
+                System.out.println("First Player size: " +firstPlayersPawns.size());
+                if(!firstPlayersPawns.isEmpty()){
+                    for (Pawn btn: firstPlayersPawns){
+                        System.out.println("Pawn row: "+GridPane.getRowIndex(btn) + "Pawn column: "+GridPane.getColumnIndex(btn));
+                    }
+                }
+                if (PawnsChecker.checkIfPawnIsOnField(firstPlayersPawns, firstUser.get(i - 1))) {
+                    error.setText("Choose different pawn");
+                } else {
                     grid.add(pawn, GridPane.getColumnIndex(firstUser.get(i - 1)), GridPane.getRowIndex(firstUser.get(i - 1)));
                     info.setText(PLAYER_2_TEXT);
                     activePlayer=PLAYER_2_TEXT;
@@ -209,12 +215,8 @@ public class TheRoyalGameOfUr extends Application {
                     if (counter.getFirstPlayersCounterStart() == 0) {
                         firstPlayersPawn.setDisable(true);
                     }
-                    System.out.println(firstPlayersPawns.size());
-                    System.out.println(secondPlayersPawns.size());
-                    System.out.println(firstUser.size());
-                    System.out.println(secondUser.size());
-                } else {
-                    error.setText("Choose different pawn");
+                    System.out.println("First players pawn row: " +GridPane.getRowIndex(pawn));
+                    System.out.println("First players pawn column: " +GridPane.getColumnIndex(pawn));
                 }
             } else if (!diceRolled) {
                 error.setText("Roll the dice");
@@ -228,6 +230,7 @@ public class TheRoyalGameOfUr extends Application {
             error.setText("");
             if (activePlayer.equals(PLAYER_2_TEXT)&&diceRolled) {
 
+
                 Pawn pawn = pawnCreator.createPawn(WHITE_TEXT);
                 pawn.setOnAction(event1 -> {
                     if (diceRolled&&activePlayer.equals(PLAYER_2_TEXT)) {
@@ -240,8 +243,16 @@ public class TheRoyalGameOfUr extends Application {
                 });
 
                 int i = Integer.parseInt(dice.getText());
-
-                if (!PawnsChecker.checkIfPawnIsOnField(secondPlayersPawns, secondUser.get(i - 1)) || secondPlayersPawns.isEmpty()) {
+                System.out.println("Second Player: occupied? " + PawnsChecker.checkIfPawnIsOnField(secondPlayersPawns, secondUser.get(i - 1)));
+                System.out.println("Second Player size: " +secondPlayersPawns.size());
+                if(!secondPlayersPawns.isEmpty()){
+                    for (Pawn btn: secondPlayersPawns){
+                        System.out.println("Pawn row: "+GridPane.getRowIndex(btn) + "Pawn column: "+GridPane.getColumnIndex(btn));
+                    }
+                }
+                if (PawnsChecker.checkIfPawnIsOnField(secondPlayersPawns, secondUser.get(i - 1))) {
+                    error.setText("Choose different pawn");
+                } else {
                     grid.add(pawn, GridPane.getColumnIndex(secondUser.get(i - 1)), GridPane.getRowIndex(secondUser.get(i - 1)));
                     info.setText(PLAYER_1_TEXT);
                     activePlayer=PLAYER_1_TEXT;
@@ -252,12 +263,8 @@ public class TheRoyalGameOfUr extends Application {
                     if (counter.getSecondPlayersCounterStart() == 0) {
                         secondPlayersPawn.setDisable(true);
                     }
-                    System.out.println(firstPlayersPawns.size());
-                    System.out.println(secondPlayersPawns.size());
-                    System.out.println(firstUser.size());
-                    System.out.println(secondUser.size());
-                } else {
-                    error.setText("Choose different pawn");
+                    System.out.println("Second players pawn row: " +GridPane.getRowIndex(pawn));
+                    System.out.println("Second players pawn column: " +GridPane.getColumnIndex(pawn));
                 }
             } else if(!activePlayer.equals(PLAYER_2_TEXT)) {
                 error.setText("It's not your move");
@@ -286,7 +293,9 @@ public class TheRoyalGameOfUr extends Application {
         int fieldIndex = fieldsList.indexOf(fieldWithPawn);
 
         int i = Integer.parseInt(dice.getText());
-        if (fieldIndex + i -1> fieldsList.size()) {
+
+
+        if (fieldIndex + i >= fieldsList.size()) {
 
             if (pawn.getId().equals(BLACK_TEXT)) {
                 grid.getChildren().remove(pawn);
@@ -294,63 +303,68 @@ public class TheRoyalGameOfUr extends Application {
                 pawn.setDisable(true);
                 counter.setFirstPlayersCounterEnd(counter.getFirstPlayersCounterEnd() + 1);
                 end1.setText(String.valueOf(counter.getFirstPlayersCounterEnd()));
-                System.out.println(firstPlayersPawns.size());
-                System.out.println(secondPlayersPawns.size());
             } else if (pawn.getId().equals(WHITE_TEXT)) {
                 grid.getChildren().remove(pawn);
                 grid.add(pawn, 6, 3);
                 pawn.setDisable(true);
                 counter.setSecondPlayersCounterEnd(counter.getSecondPlayersCounterEnd() + 1);
                 end2.setText(String.valueOf(counter.getSecondPlayersCounterEnd()));
-                System.out.println(firstPlayersPawns.size());
-                System.out.println(secondPlayersPawns.size());
             }
             activePlayer=switchPlayer;
             info.setText(switchPlayer);
             diceRolled=false;
-        } else if (PawnsChecker.checkIfPawnIsOnField(pawnsList, fieldsList.get(fieldIndex + i))) {
-            error.setText("Choose different pawn");
-        } else if (PawnsChecker.checkIfPawnIsOnField(opponentPawnsList, fieldsList.get(fieldIndex + i))) {
-            Pawn opponentsPawn = OpponentsPawnReturner.getOpponentsPawnToReturn(i, opponentPawnsList, fieldsList, fieldIndex);
+        } else {
+            if (PawnsChecker.checkIfPawnIsOnField(pawnsList, fieldsList.get(fieldIndex + i))) {
+                error.setText("Choose different pawn");
+            }
+            if (PawnsChecker.checkIfPawnIsOnField(opponentPawnsList, fieldsList.get(fieldIndex + i))) {
+                Pawn opponentsPawn = OpponentsPawnReturner.getOpponentsPawnToReturn(i, opponentPawnsList, fieldsList, fieldIndex);
 
-            if (opponentsPawn.getId().equals(WHITE_TEXT)) {
-                counter.setSecondPlayersCounterStart(counter.getSecondPlayersCounterStart() + 1);
-                start2.setText(String.valueOf(counter.getSecondPlayersCounterStart()));
-                if (counter.getSecondPlayersCounterStart()>0&&secondPlayersPawn.isDisabled()){
-                    secondPlayersPawn.setDisable(false);
+                if (opponentsPawn.getId().equals(WHITE_TEXT)) {
+                    counter.setSecondPlayersCounterStart(counter.getSecondPlayersCounterStart() + 1);
+                    start2.setText(String.valueOf(counter.getSecondPlayersCounterStart()));
+                    if (counter.getSecondPlayersCounterStart()>0&&secondPlayersPawn.isDisabled()){
+                        secondPlayersPawn.setDisable(false);
+                    }
+                } else if (opponentsPawn.getId().equals(BLACK_TEXT)) {
+                    counter.setFirstPlayersCounterStart(counter.getFirstPlayersCounterStart() + 1);
+                    start1.setText(String.valueOf(counter.getFirstPlayersCounterStart()));
+                    if(counter.getFirstPlayersCounterStart()>0&&firstPlayersPawn.isDisabled()){
+                        firstPlayersPawn.setDisable(false);
+                    }
                 }
                 grid.getChildren().remove(opponentsPawn);
                 opponentPawnsList.remove(opponentsPawn);
-                System.out.println(firstPlayersPawns.size());
-                System.out.println(secondPlayersPawns.size());
-            } else if (opponentsPawn.getId().equals(BLACK_TEXT)) {
-                counter.setFirstPlayersCounterStart(counter.getFirstPlayersCounterStart() + 1);
-                start1.setText(String.valueOf(counter.getFirstPlayersCounterStart()));
-                if(counter.getFirstPlayersCounterStart()>0&&firstPlayersPawn.isDisabled()){
-                    firstPlayersPawn.setDisable(false);
+                grid.add(pawn, GridPane.getColumnIndex(fieldsList.get(fieldIndex + i)), GridPane.getRowIndex(fieldsList.get(fieldIndex + i)));
+                info.setText(switchPlayer);
+                activePlayer=switchPlayer;
+                diceRolled=false;
+            } else if (!PawnsChecker.checkIfPawnIsOnField(pawnsList, fieldsList.get(fieldIndex + i))) {
+                grid.getChildren().remove(pawn);
+                grid.add(pawn, GridPane.getColumnIndex(fieldsList.get(fieldIndex + i)), GridPane.getRowIndex(fieldsList.get(fieldIndex + i)));
+                info.setText(switchPlayer);
+                diceRolled=false;
+                activePlayer=switchPlayer;
+                System.out.println("Pawn on board row: " +GridPane.getRowIndex(pawn));
+                System.out.println("Pawn on board column: " +GridPane.getColumnIndex(pawn));
+
+                System.out.println("First Player size: " +firstPlayersPawns.size());
+                if(!firstPlayersPawns.isEmpty()){
+                    for (Pawn btn: firstPlayersPawns){
+                        System.out.println("Pawn row: "+GridPane.getRowIndex(btn) + "Pawn column: "+GridPane.getColumnIndex(btn));
+                    }
                 }
-                grid.getChildren().remove(opponentsPawn);
-                opponentPawnsList.remove(opponentsPawn);
-                System.out.println(firstPlayersPawns.size());
-                System.out.println(secondPlayersPawns.size());
+                System.out.println("Second Player size: " +secondPlayersPawns.size());
+                if(!secondPlayersPawns.isEmpty()){
+                    for (Pawn btn: secondPlayersPawns){
+                        System.out.println("Pawn row: "+GridPane.getRowIndex(btn) + "Pawn column: "+GridPane.getColumnIndex(btn));
+                    }
+                }
+
             }
 
-            grid.add(pawn, GridPane.getColumnIndex(fieldsList.get(fieldIndex + i)), GridPane.getRowIndex(fieldsList.get(fieldIndex + i)));
-            info.setText(switchPlayer);
-            activePlayer=switchPlayer;
-            diceRolled=false;
-        } else if (!PawnsChecker.checkIfPawnIsOnField(pawnsList, fieldsList.get(fieldIndex + i))) {
-            grid.getChildren().remove(pawn);
-            grid.add(pawn, GridPane.getColumnIndex(fieldsList.get(fieldIndex + i)), GridPane.getRowIndex(fieldsList.get(fieldIndex + i)));
-            info.setText(switchPlayer);
-            diceRolled=false;
-            activePlayer=switchPlayer;
-            System.out.println(firstPlayersPawns.size());
-            System.out.println(secondPlayersPawns.size());
+
+
         }
-
     }
-
 }
-
-

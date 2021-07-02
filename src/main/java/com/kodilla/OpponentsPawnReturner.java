@@ -20,27 +20,4 @@ public class OpponentsPawnReturner {
         }
         return opponentsPawn;
     }
-
-    public static Button getBlackPawnToReturn(int keyValue, Map<Integer, Button> blackPawnOnBoardMap){
-        Button blackPawn = null;
-        if (!blackPawnOnBoardMap.isEmpty()) {
-            for (Map.Entry<Integer, Button> entry : blackPawnOnBoardMap.entrySet()) {
-                if (entry.getKey().equals(keyValue)){
-                    blackPawn = entry.getValue();
-                }
-            }
-        }
-        return blackPawn;
-    }
-    public static Button getWhitePawnToReturn(int keValue, Map<Integer, Button> whitePawnOnBoardMap){
-        Button whitePawn = null;
-        if (!whitePawnOnBoardMap.isEmpty()) {
-            for (Map.Entry<Integer, Button> entry: whitePawnOnBoardMap.entrySet()){
-                if (entry.getKey().equals(keValue)){
-                    whitePawn = entry.getValue();
-                }
-            }
-        }
-        return whitePawn;
-    }
 }

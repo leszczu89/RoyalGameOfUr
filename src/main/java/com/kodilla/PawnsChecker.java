@@ -12,18 +12,12 @@ public class PawnsChecker {
 
     public static boolean checkIfPawnIsOnField(List<Pawn> pawnsList, Node field) {
         boolean result = false;
-        for (Node btn: pawnsList){
-            result= GridPane.getRowIndex(field).equals(GridPane.getRowIndex(btn)) && GridPane.getColumnIndex(field).equals(GridPane.getColumnIndex(btn));
-
+        for (Pawn pawn: pawnsList){
+            if(GridPane.getRowIndex(pawn).equals(GridPane.getRowIndex(field))&&GridPane.getColumnIndex(pawn).equals(GridPane.getColumnIndex(field))){
+                result = true;
+                break;
+            } else result = false;
         }
         return result;
-    }
-    public static boolean checkIfBlackPawnIsOnField(Map<Integer, Button> pawnsList, int fieldIndex) {
-
-        return pawnsList.containsKey(fieldIndex);
-    }
-    public static boolean checkIfWhitePawnIsOnField(Map<Integer, Button> pawnsList, int fieldIndex) {
-
-        return pawnsList.containsKey(fieldIndex);
     }
 }
