@@ -6,9 +6,9 @@
 .dice {
     -fx-background-color: YELLOW;
     -fx-alignment: center;
-    -fx-height: 70px;
-    -fx-width: 70px;
-    -fx-border-radius: 5%;
+    -fx-max-height: 70px;
+    -fx-max-width: 70px;
+    -fx-border-radius: 10px;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-background-size: 70px;
